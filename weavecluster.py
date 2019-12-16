@@ -1,7 +1,10 @@
 import os
 
-# run echo $(kubectl version | base64 | tr -d '\n') in the shell of the masternode
-KUBECTL_VERSION = os.system("echo $(kubectl version | base64 | tr -d '\n')")
+def get_kubectl_version():
+	os.system("echo $(kubectl version | base64 | tr -d '\n') > /home/masternode/clusterbuildcommands/kubectlversion.txt")	
+	with open('kubectlversion.txt', 'r') as file:
+		kubectl_version = file.read().replace('\n','')
+	return(kubectl_version)
 
 def main():
 	print("***Updating package lists***")
@@ -44,7 +47,7 @@ def main():
 	os.system("sudo chown 1000:1000 /home/masternode/.kube/config")
 	print("Done")
 	print("***Installing Weave as the CNI***")
-	os.system("kubectl apply -f 'https://cloud.weave.works/k8s/net?k8s-version=%s'" % KUBECTL_VERSION)
+	os.system("kubectl apply -f 'https://cloud.weave.works/k8s/net?k8s-version=%s'" % get_kubectl_version())
 	print("Done")
 
 if __name__ == '__main__':
