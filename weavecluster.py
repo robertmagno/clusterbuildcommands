@@ -1,7 +1,7 @@
 import os
 
 # run echo $(kubectl version | base64 | tr -d '\n') in the shell of the masternode
-KUBECTL_VERSION = 'Q2xpZW50IFZlcnNpb246IHZlcnNpb24uSW5mb3tNYWpvcjoiMSIsIE1pbm9yOiIxNSIsIEdpdFZlcnNpb246InYxLjE1LjQiLCBHaXRDb21taXQ6IjY3ZDJmY2YyNzZmY2Q5Y2Y3NDNhZDRiZTlhOWVmNTgyOGFkYzA4MmYiLCBHaXRUcmVlU3RhdGU6ImNsZWFuIiwgQnVpbGREYXRlOiIyMDE5LTA5LTE4VDE0OjUxOjEzWiIsIEdvVmVyc2lvbjoiZ28xLjEyLjkiLCBDb21waWxlcjoiZ2MiLCBQbGF0Zm9ybToibGludXgvYW1kNjQifQpTZXJ2ZXIgVmVyc2lvbjogdmVyc2lvbi5JbmZve01ham9yOiIxIiwgTWlub3I6IjE1IiwgR2l0VmVyc2lvbjoidjEuMTUuNyIsIEdpdENvbW1pdDoiNmMxNDNkMzViYjExZDc0OTcwZTdiYzBiNmM0NWI2YmZkZmZjMGJkNCIsIEdpdFRyZWVTdGF0ZToiY2xlYW4iLCBCdWlsZERhdGU6IjIwMTktMTItMTFUMTI6MzQ6MTdaIiwgR29WZXJzaW9uOiJnbzEuMTIuMTIiLCBDb21waWxlcjoiZ2MiLCBQbGF0Zm9ybToibGludXgvYW1kNjQifQo='
+KUBECTL_VERSION = os.system('echo $(kubectl version | base64 | tr -d '\n')')
 
 def main():
 	print("***Updating package lists***")
