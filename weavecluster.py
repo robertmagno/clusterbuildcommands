@@ -1,7 +1,7 @@
 import os
 
 # run echo $(kubectl version | base64 | tr -d '\n') in the shell of the masternode
-KUBECTL_VERSION = os.system('echo $(kubectl version | base64 | tr -d '\n')')
+KUBECTL_VERSION = os.system("echo $(kubectl version | base64 | tr -d '\n')")
 
 def main():
 	print("***Updating package lists***")
