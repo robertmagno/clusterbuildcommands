@@ -1,8 +1,7 @@
 import os
 
-def get_kubernetes_version():
-	version = os.system("$(kubectl version | base64 | tr -d '\n')")
-	return(version)
+# run echo $(kubectl version | base64 | tr -d '\n') in the shell of the masternode
+KUBECTL_VERSION = 'Q2xpZW50IFZlcnNpb246IHZlcnNpb24uSW5mb3tNYWpvcjoiMSIsIE1pbm9yOiIxNSIsIEdpdFZlcnNpb246InYxLjE1LjQiLCBHaXRDb21taXQ6IjY3ZDJmY2YyNzZmY2Q5Y2Y3NDNhZDRiZTlhOWVmNTgyOGFkYzA4MmYiLCBHaXRUcmVlU3RhdGU6ImNsZWFuIiwgQnVpbGREYXRlOiIyMDE5LTA5LTE4VDE0OjUxOjEzWiIsIEdvVmVyc2lvbjoiZ28xLjEyLjkiLCBDb21waWxlcjoiZ2MiLCBQbGF0Zm9ybToibGludXgvYW1kNjQifQpTZXJ2ZXIgVmVyc2lvbjogdmVyc2lvbi5JbmZve01ham9yOiIxIiwgTWlub3I6IjE1IiwgR2l0VmVyc2lvbjoidjEuMTUuNyIsIEdpdENvbW1pdDoiNmMxNDNkMzViYjExZDc0OTcwZTdiYzBiNmM0NWI2YmZkZmZjMGJkNCIsIEdpdFRyZWVTdGF0ZToiY2xlYW4iLCBCdWlsZERhdGU6IjIwMTktMTItMTFUMTI6MzQ6MTdaIiwgR29WZXJzaW9uOiJnbzEuMTIuMTIiLCBDb21waWxlcjoiZ2MiLCBQbGF0Zm9ybToibGludXgvYW1kNjQifQo='
 
 def main():
 	print("***Updating package lists***")
@@ -45,9 +44,7 @@ def main():
 	os.system("sudo chown 1000:1000 /home/masternode/.kube/config")
 	print("Done")
 	print("***Installing Weave as the CNI***")
-	kube_version = get_kubernetes_version()
-	print(kube_version)
-	os.system("kubectl apply -f 'https://cloud.weave.works/k8s/net?k8s-version=%d'" % kube_version)
+	os.system("kubectl apply -f 'https://cloud.weave.works/k8s/net?k8s-version=%d'" % KUBECTL_VERSION)
 	print("Done")
 
 if __name__ == '__main__':
