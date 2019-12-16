@@ -44,7 +44,7 @@ def main():
 	os.system("sudo chown 1000:1000 /home/masternode/.kube/config")
 	print("Done")
 	print("***Installing Weave as the CNI***")
-	os.system("kubectl apply -f 'https://cloud.weave.works/k8s/net?k8s-version=%d'" % KUBECTL_VERSION)
+	os.system("kubectl apply -f 'https://cloud.weave.works/k8s/net?k8s-version=%s'" % KUBECTL_VERSION)
 	print("Done")
 
 if __name__ == '__main__':
