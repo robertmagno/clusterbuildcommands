@@ -79,7 +79,7 @@ def main():
 	print("Done")
 
 	print("***Checking Master Node Status***")
-	os.system(get_masternode_status())
+	get_masternode_status()
 
 	print("***Joining Worker Nodes to the Cluster***")
 	os.system("kubeadm token create --print-join-command > /home/masternode/clusterbuildcommands/joincommand.txt")
