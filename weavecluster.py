@@ -1,5 +1,42 @@
 import os
 from time import sleep 
+import logging
+import paramiko
+
+class SSH:
+    def __init__(self):
+        pass
+
+    def get_ssh_connection(self, ssh_machine, ssh_username, ssh_password):
+        client = paramiko.SSHClient()
+        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        client.connect(
+            hostname=ssh_machine,
+            username=ssh_username,
+            password=ssh_password,
+            timeout=10)
+        return client
+
+    def run_sudo_command(
+            self,
+            ssh_username="root",
+            ssh_password="abc123",
+            ssh_machine="localhost",
+            command="ls",
+            jobid="None"):
+        conn = self.get_ssh_connection(
+            ssh_machine=ssh_machine,
+            ssh_username=ssh_username,
+            ssh_password=ssh_password)
+        command = "sudo -S -p '' %s" % command
+        logging.info("Job[%s]: Executing: %s" % (jobid, command))
+        stdin, stdout, stderr = conn.exec_command(command=command)
+        stdin.write(ssh_password + "\n")
+        stdin.flush()
+        stdoutput = [line for line in stdout]
+        stderroutput = [line for line in stderr]
+        for output in stdoutput:
+            logging.info("Job[%s]: %s" % (jobid, output.strip()))
 
 def get_kubectl_version():
 	os.system("echo $(kubectl version | base64 | tr -d '\n') > /home/masternode/clusterbuildcommands/kubectlversion.txt")	
@@ -20,6 +57,26 @@ def get_masternode_status():
 			sleep(5)
 			get_masternode_status()
 
+def join_worker_nodes():
+    os.system(
+        "kubeadm token create --print-join-command > /home/masternode/clusterbuildcommands/joincommand.txt")
+    with open('/home/masternode/clusterbuildcommands/joincommand.txt') as file:
+        joincommand = 'sudo ' + str(file.read()).replace('\n', '')
+    print(joincommand)
+    ssh = SSH()
+    ssh.run_sudo_command(
+	    ssh_username="workernode1",
+	    ssh_password="Citrix123",
+	    ssh_machine="192.168.10.21",
+	    command=joincommand,
+	    jobid="None")
+    ssh.run_sudo_command(
+	    ssh_username="workernode2",
+	    ssh_password="Citrix123",
+	    ssh_machine="192.168.10.22",
+	    command=joincommand,
+	    jobid="None")
+			
 def main():
 	print("***Updating package lists***")
 	os.system("sudo apt-get update > /dev/null")
@@ -82,8 +139,7 @@ def main():
 	get_masternode_status()
 
 	print("***Joining Worker Nodes to the Cluster***")
-	os.system("kubeadm token create --print-join-command > /home/masternode/clusterbuildcommands/joincommand.txt")
-
+	join_worker_nodes()
 	
 if __name__ == '__main__':
 	main()
