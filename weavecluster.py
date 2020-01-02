@@ -77,7 +77,7 @@ def main():
 
 	print("***Checking Master Node Status***")
 	os.system(get_masternode_status())
-	print("***Master Node Ready***)
+	print("***Master Node Ready***")
 	
 if __name__ == '__main__':
 	main()
