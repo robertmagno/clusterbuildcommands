@@ -11,11 +11,14 @@ def get_masternode_status():
 	os.system("kubectl get nodes > /home/masternode/clusterbuildcommands/nodestatus.txt")
 	with open('/home/masternode/clusterbuildcommands/nodestatus.txt') as file:
 		contents = file.read()
-		search_word = str('Ready')
+		search_word = str(' Ready')
 		if search_word in contents:
-			break
+			print('***MasterNode is Ready***')
+			return
 		else:
-			print('***Waiting for MasterNode to be Ready***')
+			print('***Waiting for MasterNode to be Ready, waiting 5 seconds***')
+			sleep(5)
+			get_masternode_status()
 
 def main():
 	print("***Updating package lists***")
@@ -77,7 +80,8 @@ def main():
 
 	print("***Checking Master Node Status***")
 	os.system(get_masternode_status())
-	print("***Master Node Ready***")
+
+	print("***Joining Worker Nodes to the Cluster***")
 	
 if __name__ == '__main__':
 	main()
