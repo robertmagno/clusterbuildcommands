@@ -82,6 +82,8 @@ def main():
 	os.system(get_masternode_status())
 
 	print("***Joining Worker Nodes to the Cluster***")
+	os.system("kubeadm token create --print-join-command > /home/masternode/clusterbuildcommands/joincommand.txt")
+
 	
 if __name__ == '__main__':
 	main()
