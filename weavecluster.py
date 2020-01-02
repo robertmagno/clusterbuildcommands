@@ -53,8 +53,8 @@ def get_masternode_status():
 			print('MasterNode is Ready')
 			return
 		else:
-			print('***Waiting for MasterNode to be Ready, waiting 5 seconds***')
-			sleep(5)
+			print('***Waiting for MasterNode to be Ready***')
+			sleep(10)
 			get_masternode_status()
 
 def is_cluster_ready():
