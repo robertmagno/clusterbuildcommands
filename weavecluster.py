@@ -50,12 +50,24 @@ def get_masternode_status():
 		contents = file.read()
 		search_word = str(' Ready')
 		if search_word in contents:
-			print('***MasterNode is Ready***')
+			print('MasterNode is Ready')
 			return
 		else:
 			print('***Waiting for MasterNode to be Ready, waiting 5 seconds***')
 			sleep(5)
 			get_masternode_status()
+
+def is_cluster_ready():
+	os.system("kubectl get nodes > /home/masternode/clusterbuildcommands/3nodestatus.txt")
+	with open('/home/masternode/clusterbuildcommands/3nodestatus.txt') as file:
+		contents = file.read()
+		search_word = str('NotReady')
+		if search_word in contents:
+			print('***Waiting for all Nodes to be Ready***')
+			sleep(10)
+			is_cluster_ready
+		else:
+			return
 
 def join_worker_nodes():
     os.system(
@@ -139,6 +151,9 @@ def main():
 
 	print("***Joining Worker Nodes to the Cluster***")
 	join_worker_nodes()
+	
+	is_cluster_ready()
+	print("***Kubenetes cluster is initialized***")
 	
 if __name__ == '__main__':
 	main()
