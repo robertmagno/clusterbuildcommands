@@ -62,7 +62,6 @@ def join_worker_nodes():
         "kubeadm token create --print-join-command > /home/masternode/clusterbuildcommands/joincommand.txt")
     with open('/home/masternode/clusterbuildcommands/joincommand.txt') as file:
         joincommand = 'sudo ' + str(file.read()).replace('\n', '')
-    print(joincommand)
     ssh = SSH()
     ssh.run_sudo_command(
 	    ssh_username="workernode1",
