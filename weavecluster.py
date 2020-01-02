@@ -65,7 +65,7 @@ def is_cluster_ready():
 		if search_word in contents:
 			print('***Waiting for all Nodes to be Ready***')
 			sleep(10)
-			is_cluster_ready
+			is_cluster_ready()
 		else:
 			return
 
