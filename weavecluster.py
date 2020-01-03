@@ -153,7 +153,7 @@ def main():
 	join_worker_nodes()
 	
 	is_cluster_ready()
-	print("***Kubenetes cluster is initialized***")
+	print("***Kubernetes cluster is initialized***")
 	
 if __name__ == '__main__':
 	main()
