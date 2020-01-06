@@ -44,12 +44,25 @@ def get_masternode_status():
 		contents = file.read()
 		search_word = str(' Ready')
 		if search_word in contents:
-			print('MasterNode is Ready')
+			print('***MasterNode is Ready***')
 			return
 		else:
 			print('***Waiting for MasterNode to be Ready***')
 			sleep(10)
 			get_masternode_status()
+			
+def get_pod_status():
+	os.system("kubectl get pods -A > /home/masternode/clusterbuildcommands/podstatus.txt")
+	with open('/home/masternode/clusterbuildcommands/podstatus.txt') as file:
+		contents = file.read()
+		search_word = str('0/1')
+		if search_word in contents:
+			print('*** Waiting for Pods to Initialize***')
+			sleep(10)
+			get_pod_status()
+		else:
+			print('***Pods are Ready***')
+			return
 
 def is_cluster_ready():
 	os.system("kubectl get nodes > /home/masternode/clusterbuildcommands/3nodestatus.txt")
@@ -142,6 +155,9 @@ def main():
 
 	print("***Checking Master Node Status***")
 	get_masternode_status()
+	
+	print("***Checking Pod Status***")
+	get_pod_status()
 
 	print("***Joining Worker Nodes to the Cluster***")
 	join_worker_nodes()
