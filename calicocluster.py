@@ -114,7 +114,7 @@ def main():
 	os.system("sudo apt-get update -y > /dev/null")
 	
 	print("***Installing Docker***")
-	os.system("sudo apt-get install docker-ce=18.06.2~ce~3-0~ubuntu -y > /dev/null")
+	os.system("sudo apt-get install docker-ce=19.03.8~ce~3-0~ubuntu -y > /dev/null")
 	print("Done")
 	
 	print("***Adding Kubernetes GPG key***")
@@ -128,13 +128,13 @@ def main():
 	os.system("sudo apt-get update > /dev/null")
 	print("Done")
 	
-	print("***Installing Kubernetes Version 1.15.4***")
-	os.system("sudo apt-get install kubelet=1.15.4-00 kubeadm=1.15.4-00 kubectl=1.15.4-00 -y > /dev/null")
+	print("***Installing Kubernetes Version 1.18.0***")
+	os.system("sudo apt-get install kubelet=1.18.0-00 kubeadm=1.18.0-00 kubectl=1.18.0-00 -y > /dev/null")
 	print("Done")
 	
 	print("***Initializing Kubernetes Cluster***")
 	print("***Note this process may take 1-5 minutes***")
-	os.system("sudo kubeadm init --pod-network-cidr=10.10.0.0/16 --apiserver-advertise-address=192.168.10.20 > /dev/null")
+	os.system("sudo kubeadm init --apiserver-advertise-address=192.168.10.20 > /dev/null")
 	print("Done")
 	
 	print("***Creating a directory for Kubernetes configurations***")
