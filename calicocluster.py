@@ -114,7 +114,7 @@ def main():
 	os.system("sudo apt-get update -y > /dev/null")
 	
 	print("***Installing Docker***")
-	os.system("sudo apt-get install docker-ce=19.03.8~ce~3-0~ubuntu -y > /dev/null")
+	os.system("sudo apt-get install docker-ce=19.03.8~3-0~ubuntu-xenial -y > /dev/null")
 	print("Done")
 	
 	print("***Adding Kubernetes GPG key***")
