@@ -1,4 +1,3 @@
-
 ---
 # Source: calico/templates/calico-config.yaml
 # This ConfigMap is used to configure a self-hosted Calico installation.
